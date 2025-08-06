@@ -1,0 +1,106 @@
+# ============================
+# Projeto
+# Referência: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+#
+# Instale o pacote: python-dotenv
+#
+# Os pontos de atenção estão comentados próximo das chaves, aqui só coloquei um
+# lembrete.
+#
+# Atenção: As versões do Python devem ser consistentes entre:
+#   - project.requires-python
+#   - tool.ruff.target-version
+#   - tool.pyright.pythonVersion
+#
+# Atenção: O nome do pacote principal deve ser consistente entre:
+#   - project.scripts
+#   - tool.ruff.lint.isort.known-first-party
+#   - A pasta dentro de 'src/'
+# ============================
+
+[project]
+name = "projeto-uv"
+version = "0.1.0"
+description = "projeto-uv"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Lucas Andrade", email = "msesobreira481@gmail.com" }]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "python-dotenv>=1.1.0",
+    "crewai>=0.152.0",
+    "crewai-tools>=0.60.0",
+]
+
+[project.optional-dependencies]
+dev = ["ruff", "pyright", "pytest", "pytest-xdist"]
+
+# ============================
+# Lint e formatação (Ruff)
+# ============================
+[tool.ruff]
+line-length = 88
+fix = true
+show-fixes = true
+indent-width = 4
+exclude = ["venv", ".venv", "env", ".env", "node_modules", "__pycache__"]
+
+[tool.ruff.lint]
+select = [
+    "ASYNC",
+    "A",
+    "ANN",
+    "B",
+    "BLE",
+    "C4",
+    "C90",
+    "COM",
+    "E",
+    "EM",
+    "ERA",
+    "EXE",
+    "F",
+    "FBT",
+    "FIX",
+    "I",
+    "ICN",
+    "ISC",
+    "Q",
+    "RET",
+    "RSE",
+    "S",
+    "SIM",
+    "SLF",
+    "T10",
+    "T20",
+    "TC",
+    "TD",
+    "TRY",
+    "UP",
+    "W",
+    "YTT",
+    "RUF",
+    "N",
+]
+ignore = ["T201", "COM812"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["ANN201", "S101"]
+
+# ============================
+# Tipagem (Pyright)
+# ============================
+[tool.pyright]
+typeCheckingMode = "strict"
+include = ["src", 'tests']
+exclude = [
+    "**/venv",
+    "**/.venv",
+    "**/env",
+    "**/.env",
+    "**/node_modules",
+    "**/__pycache__",
+]
+venv = ".venv"
+venvPath = "."
+executionEnvironments = [{ root = "src" }]
